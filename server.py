@@ -37,5 +37,9 @@ def create_account():
     id_counter += 1
     return render_template('account-created.html', first_name=first_name, last_name=last_name)
 
+@app.get('/accounts')
+def list_accounts():
+    return {'accounts': accounts}
+
 if __name__ == '__main__':
     app.run(debug=True)
