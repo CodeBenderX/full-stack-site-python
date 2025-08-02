@@ -1,6 +1,9 @@
 from flask import Flask, request, render_template
 
 app = Flask(__name__)
+#accout database
+accounts = []
+id_counter = 1
 
 @app.route('/')
 def home_page():
@@ -18,9 +21,21 @@ def contact_page():
 def form_page():
     return render_template('form-page.html')
 
-@app.post('/create_account')
+@app.post('/create-account')
 def create_account():
-    return 'successfully created account!'
+    first_name = request.form.get('first_name')
+    last_name = request.form.get('last_name')
+    
+    global id_counter
+    account = {
+        'id': id_counter,
+        'first_name': first_name,
+        'last_name': last_name
+    }
+    #Create an account
+    accounts.append(account)
+    id_counter += 1
+    return render_template('account-created.html', first_name=first_name, last_name=last_name)
 
 if __name__ == '__main__':
     app.run(debug=True)
